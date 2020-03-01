@@ -1,4 +1,4 @@
-import '../css/NavMenu.css';
+import './css/NavMenu.css';
 
 import React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';

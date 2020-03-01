@@ -38,7 +38,7 @@ export class Card implements ICard {
     this.name = name;
   }
 
-  public isFaceDown: boolean = false;
+  public isFaceDown: boolean = true;
 
   public suit: string;
   public name: string;
