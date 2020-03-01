@@ -1,16 +1,14 @@
 import React from "react";
-import Card from "../models/Card";
+import mCard from "../models/Card";
 
-const RCard = React.lazy(() => import ("./Card"));
+const Card = React.lazy(() => import ("./Card"));
 
-export const GamePile: React.FC<{ updateId?: string; pile: Card[]; }> = ({ pile, updateId }) => {
-  return <div className="inlineblock vtop relative Pile">
+export const GamePile: React.FC<{ updateId?: string; pile: mCard[]; }> = ({ pile, updateId }) => {
+  return <div className="Pile">
     {
       pile.map((c, i) => {
         return <React.Suspense key={i} fallback="Loading ....">
-          <RCard css={{ marginLeft: (i * 9) + "px" }}>
-            Test
-          </RCard>
+          <Card card={c} css={{ marginLeft: (i * 9) + "px" }}></Card>
         </React.Suspense>
       })
     }

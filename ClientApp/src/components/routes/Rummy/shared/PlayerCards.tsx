@@ -1,10 +1,10 @@
 import React from "react";
-import Player from "../models/Player";
+import mPlayer from "../models/Player";
 
-export const PlayerCards: React.FC<{ player: Player; }> = ({ player }) => {
+export const PlayerCards: React.FC<{ player: mPlayer; isActive: boolean; }> = ({ isActive, player }) => {
 
-  return <div className="player_cards_col">
-    <strong>{player.name}</strong><hr />
+  return <div className={`PlayerCards${isActive ? ' active' : ''}`}>
+    <div><strong>{player.name}</strong><hr /></div>
     {
       player.hand.map((c, i) => {
         return c && <div key={i}>

@@ -1,17 +1,24 @@
 import React from "react";
-import Deck from "../models/Deck";
-import Card from "./Card";
+import mDeck from "../models/Deck";
+import Game from "../models/Game";
 
-interface IGameDeckProps { deck: Deck; updateId: string; }
+const Card = React.lazy(() => import("./Card"));
 
-export const GameDeck: React.FC<IGameDeckProps> = ({ deck, updateId }) => {
-  return <Card>
-    <div className="inlineblock relative">
-      <div className="absolute all button_jar">
-        <span className="inlineblock vmid autom">Draw Card</span>
-      </div>
-    </div>
-  </Card>
+
+
+interface IGameDeckProps { Draw: any; deck: mDeck; updateId: string; }
+
+export const GameDeck: React.FC<IGameDeckProps> = ({ Draw, deck, updateId }) => {
+  
+  return <div className="Deck">
+    <React.Suspense fallback="Loading ....">
+      <Card>      
+        <span style={{ fontSize: "30px" }}></span>
+        <span className="btn btn-xs btn-primary vmid autom" onClick={e => { Draw(0); }}>Draw Card</span>
+      </Card>
+    </React.Suspense>
+  </div>;
+
 };
 
 export default GameDeck;

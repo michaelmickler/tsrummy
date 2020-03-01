@@ -8,7 +8,7 @@ export interface ITurnResult {
   discard: Card,
 }
 
-enum TurnPhase {
+export enum TurnPhase {
   Draw = "Draw",
   Discard = "Discard",
   Complete = "Complete",
