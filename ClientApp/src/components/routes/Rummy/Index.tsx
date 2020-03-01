@@ -30,31 +30,19 @@ const Rummy: React.FC<{}> = () => {
 
   return game.isReady && <div>
 
-    <div className="inlineblock eighty vtop">
-      <div>
+    <div className="ScreenLeft">
+      <div className="CommonDiv">
         <React.Suspense fallback="Loading ...."><GameDeck Draw={game.Draw} updateId={updateId} deck={game.deck} /></React.Suspense>
-        <React.Suspense fallback="Loading ...."><GamePile updateId={updateId} pile={game.pile} /></React.Suspense>
+        <React.Suspense fallback="Loading ...."><GamePile Draw={game.Draw} updateId={updateId} pile={game.pile} /></React.Suspense>
       </div>
       <hr />      
-      <React.Suspense fallback="Loading ...."><PlayerCards isActive={game.players[0].name === game.turn.playerName} player={game.players[0]} /></React.Suspense>
-      <React.Suspense fallback="Loading ...."><PlayerCards isActive={game.players[1].name === game.turn.playerName} player={game.players[1]} /></React.Suspense>
+      <React.Suspense fallback="Loading ...."><PlayerCards Discard={game.Discard} isActive={game.players[0].name === game.turn.playerName} player={game.players[0]} /></React.Suspense>
+      <React.Suspense fallback="Loading ...."><PlayerCards Discard={game.Discard} isActive={game.players[1].name === game.turn.playerName} player={game.players[1]} /></React.Suspense>
     </div>
-    <div className="inlineblock twenty vtop">
+    <div className="ScreenRight">
       <React.Suspense fallback={<>Loading ....</>}><Dialog updateId={updateId} /></React.Suspense><hr />
       <div>It is {game.turn.playerName}'s Turn</div>
-      {
-        game.turn.phase == TurnPhase.Draw ? 
-          <div>
-            <div>
-              <button className="btn btn-primary block" onClick={e => {
-                game.Draw(1);
-              }}>Draw from Pile</button>
-            </div>
-          </div> :
-          <div>
-            <button>Discard</button>
-          </div>
-      }
+      <div>{game.turn.Message}</div>
     </div>
 
   </div>;

@@ -10,67 +10,62 @@
 .autom { margin: auto auto auto auto; }
 .block { display: block; }
 
+.ScreenLeft, .ScreenRight{
+  display: inline-block;
+  vertical-align: top;
+}
+.ScreenLeft { width: 80%; }
+.ScreenRight { width: 20%; }
+
+.CommonDiv {
+  display: inline-block;
+  height: 315px;
+  position: relative;
+}
 
 .Pile, .Deck {
   position: relative;
   display: inline-block;
   vertical-align: top;
 }
-.Deck { width: 190px; }
+.Deck { width: 240px; }
 .Pile { width: 580px; }
 
-.PlayerCards { 
-  display: inline-block; 
-  width: 240px; 
-  height: 500px; 
-  line-height: 500px;  
-  border: solid 1px #eee;
+.Card {
+  width: 225px;
+  height: 315px;
+  position: absolute;
+  z-index: 300;
+  border-radius: 9px;
+  background: #fff;
+  border: solid 1px #444;    
 }
-.PlayerCards.active {
-  border: solid 1px green;
-}
-.PlayerCards * {
-  line-height: 1;
-}
-
-.Card { 
-  width: 180px; 
-  height: 240px;
-  line-height: 240px;
-  border: solid 1px #444;
-  border-radius: 9px;  
+.Card .CardInner {
+  width: 225px;
+  height: 315px;
+  line-height: 315px;  
   position: relative;
-  text-align: center;
+  text-align: center;  
 }
-.Card * {
-  line-height: 1;
-}
+.Card .CardInner * { line-height: 1; }
+.Card .CardInner.FaceDown { background: red; }
 .CardMark {
   position: absolute;
   width: 40px;
 }
-.CardMark .Icon {
-  font-size: 40px;
-}
+.CardMark .Icon { font-size: 40px; }
 .CardMark .Spades,
-.CardMark .Clubs {
-  color: black;
-}
+.CardMark .Clubs { color: black; }
 .CardMark .Hearts,
-.CardMark .Diamonds {
-  color: red;
-}
+.CardMark .Diamonds { color: red; }
 
-.button_jar {
-  background: #fff;
-  z-index: 302;
+.PlayerCards { 
+  display: inline-block; 
+  vertical-align: top;
+  width: 225px; 
+  height: 315px; 
+  line-height: 350px;  
+  border: solid 1px #eee;
 }
-
-.card_jar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 301;
-}
+.PlayerCards.active { border: solid 1px green; }
+.PlayerCards * { line-height: 1; }

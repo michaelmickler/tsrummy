@@ -21,7 +21,7 @@ export class Game extends Observable<Game> {
     this.score = {};
     this.players = players;
     this.deck = new Deck().Shuffle();    
-    this.players.forEach(p => { 
+    this.players.forEach(p => {
       this.score[p.name] = new Score(0); 
       this.playerMap[p.name] = p;
     });
@@ -30,7 +30,6 @@ export class Game extends Observable<Game> {
     this.turn = new Turn(players[0].name);
     this.update();
   }  
-
   public deal = () => {
     let round = 0;
     while(round < 7) {
@@ -48,6 +47,8 @@ export class Game extends Observable<Game> {
 
   // pos (position) 0 = Deck, 1-x = Pile
   public Draw = (pos: number) => {
+
+    if(this.turn.phase !== TurnPhase.Draw) { return; }
     
     let player = this.playerMap[this.turn.playerName];
     let cards;
@@ -55,22 +56,52 @@ export class Game extends Observable<Game> {
     if(pos === 0) {
       cards = [this.deck.DrawTop()];      
     } else if(pos > 0) {
-      cards = [this.pile.splice(pos - 1)];
+      cards = this.pile.splice(pos - 1);
+      this.turn.mustPlay = cards[0];   
     }
     
     player.hand = [ ...player.hand, ...cards ];
-    this.turn.phase = TurnPhase.Discard;
+
+    this.turn.Draw(cards);
+
     this.update();
 
   };
 
   public Discard = (pos: number) => {
 
-    let card = this.playerMap[this.turn.playerName].hand.splice(pos, 1);
+    if(this.turn.phase === TurnPhase.Draw) { return; }
+    if(this.turn.mustPlay && !this.turn.checkPlayed()) { return; }
+
+    let [card] = this.playerMap[this.turn.playerName].hand.splice(pos, 1);
+    card.isFaceDown = false;
 
     this.pile.push(card);
+    this.turn.Discard(card);
+
+    this.history.push(this.turn.Submit());
+    this.turn = new Turn(this.GetNextPlayerName());
 
     this.update();
+    
+  };
+
+  public GetNextPlayerName = () => { 
+    
+    let { playerName } = this.players.reduce((result, player, index) => {      
+      if(!result.done) {
+        if(index === this.players.length - 1) {
+          result.playerName = this.players[0].name;
+          result.done = true;
+        } else if(player.name === this.turn.playerName) {
+          result.playerName = this.players[index + 1].name;
+          result.done = true;      
+        }
+      }
+      return result;
+    }, { done: false, playerName: null });
+
+    return playerName;
 
   };
 
