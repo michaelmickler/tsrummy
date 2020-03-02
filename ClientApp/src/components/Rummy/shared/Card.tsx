@@ -20,14 +20,16 @@ export const SuitIcons: any = {
   "Clubs": <span>&#x2663;</span>,
 };
 
-export const CardMark: React.FC<ICardMarkProps> = ({ card, type }) => {
+export const Icons: any = {
+  "LeftArrow": <span>◀</span>,
+  "RightArrao": <span>▶</span>
+};
 
-  const st_left = { top: 10, left: 10, right: "auto", bottom: "auto", };
-  const st_right = { bottom: 10, right: 10, top: "auto", left: "auto", };
+export const CardMark: React.FC<ICardMarkProps> = ({ card, type }) => {
 
   if(!card) { return <></>; }
   
-  return <div className="CardMark" style={ type === 'left' ? st_left : st_right }>    
+  return <div className={`CardMark ${type}`}>
     {
       card.isFaceDown ?
         <div></div> :

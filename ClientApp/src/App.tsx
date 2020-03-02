@@ -6,8 +6,8 @@ import Layout from './components/shared/Layout';
 
 export const LoadingModule = () => <>Loading ....</>;
 
-const Home = React.lazy(() => import("./components/routes/Home/Index"));
-const Rummy = React.lazy(() => import("./components/routes/Rummy/Index"));
+const Home = React.lazy(() => import("./components/Home/Index"));
+const Rummy = React.lazy(() => import("./components/Rummy/Index"));
 
 export const App: React.FC<{}> = ({}) => {
 

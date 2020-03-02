@@ -29,12 +29,15 @@ export class Game extends Observable<Game> {
     this.isReady = true;
     this.turn = new Turn(players[0].name);
     this.update();
-  }  
+  }
+  
   public deal = () => {
     let round = 0;
     while(round < 7) {
       this.players.forEach(p => {
-        p.hand.push(this.deck.DrawTop());
+        let c = this.deck.DrawTop();
+        c.flip();
+        p.hand.push(c);
       });
       round++;
     }
@@ -54,12 +57,15 @@ export class Game extends Observable<Game> {
     let cards;
     
     if(pos === 0) {
-      cards = [this.deck.DrawTop()];      
+      cards = [this.deck.DrawTop()];
+      for(var c of cards) { c.flip(); }
     } else if(pos > 0) {
       cards = this.pile.splice(pos - 1);
-      this.turn.mustPlay = cards[0];   
+      if(cards.length > 1) {
+        this.turn.mustPlay = cards[0];
+      }
     }
-    
+
     player.hand = [ ...player.hand, ...cards ];
 
     this.turn.Draw(cards);

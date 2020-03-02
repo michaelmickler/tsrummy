@@ -1,6 +1,5 @@
 import "./css/Rummy.css";
 
-import { TurnPhase } from "./models/Turn";
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -13,7 +12,6 @@ const PlayerCards = React.lazy(() => import('./shared/PlayerCards'));
 const Dialog = React.lazy(() => import("./shared/Dialog"));
 
 let game: mGame;
-
 let test_players = [ new mPlayer("Michael Mickler"), new mPlayer("Rachel Cope"), ];
 
 const Rummy: React.FC<{}> = () => {
@@ -28,16 +26,20 @@ const Rummy: React.FC<{}> = () => {
 
   React.useEffect(() => { (window as any)._getState = () => { console.log(game); }; }, []);
 
+  const DrawFromPile = (e: Event, pos: number) => game.Draw(pos + 1);
+  const DrawFromDeck = (e: Event, pos: number) => game.Draw(0);
+
+  const activePlayer = game.playerMap[game.turn.playerName];
+
   return game.isReady && <div>
 
     <div className="ScreenLeft">
       <div className="CommonDiv">
-        <React.Suspense fallback="Loading ...."><GameDeck Draw={game.Draw} updateId={updateId} deck={game.deck} /></React.Suspense>
-        <React.Suspense fallback="Loading ...."><GamePile Draw={game.Draw} updateId={updateId} pile={game.pile} /></React.Suspense>
+        <React.Suspense fallback="Loading ...."><GameDeck onClick={DrawFromDeck} updateId={updateId} deck={game.deck} /></React.Suspense>
+        <React.Suspense fallback="Loading ...."><GamePile onClick={DrawFromPile} updateId={updateId} pile={game.pile} /></React.Suspense>
       </div>
-      <hr />      
-      <React.Suspense fallback="Loading ...."><PlayerCards Discard={game.Discard} isActive={game.players[0].name === game.turn.playerName} player={game.players[0]} /></React.Suspense>
-      <React.Suspense fallback="Loading ...."><PlayerCards Discard={game.Discard} isActive={game.players[1].name === game.turn.playerName} player={game.players[1]} /></React.Suspense>
+      <hr />
+      <React.Suspense fallback="Loading ...."><PlayerCards updateId={updateId} Discard={game.Discard} player={activePlayer} /></React.Suspense>      
     </div>
     <div className="ScreenRight">
       <React.Suspense fallback={<>Loading ....</>}><Dialog updateId={updateId} /></React.Suspense><hr />

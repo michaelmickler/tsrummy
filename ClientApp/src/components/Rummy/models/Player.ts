@@ -9,6 +9,8 @@ export class Player {
   hand: Card[] = [];
   name: string;
 
+  staging: Card[] = [];
+
 }
 
 export default Player;
