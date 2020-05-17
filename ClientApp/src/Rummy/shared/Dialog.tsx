@@ -1,10 +1,8 @@
-import * as SignalR from "../../../store/SignalR";
+import * as SignalR from "../../store/SignalR";
 
 import React from "react";
 import { connect } from "react-redux";
-import { ApplicationState } from "../../../store";
-
-export interface IDialogProps { getConnection?: () => any; Connect: any; updateId: string; }
+import { ApplicationState } from "../../store";
 
 export const Dialog: React.FC<IDialogProps & any> = ({ getConnection, Connect, updateId }) => {
 

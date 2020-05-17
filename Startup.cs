@@ -25,15 +25,10 @@ namespace tsrummy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSignalR(options => {
-                options.EnableDetailedErrors = true;
-            }).AddJsonProtocol();
+            services.AddSignalR(options => { options.EnableDetailedErrors = true; }).AddJsonProtocol();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,10 +54,7 @@ namespace tsrummy
             app.UseEndpoints(endpoints =>
             {     
                 endpoints.MapHub<GameHub>("/GameHub");
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}"
-                );                
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}/{id?}");                
             });
 
             app.UseSpa(spa =>

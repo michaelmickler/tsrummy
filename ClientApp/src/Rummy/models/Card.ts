@@ -37,16 +37,6 @@ export enum CardName {
   Ace = "Ace",
 }
 
-interface ICard {
-
-  suit: string;
-  name: string;
-  
-  read: () => string;
-  flip: () => void;
-
-}
-
 export class Card implements ICard {
 
   constructor(suit: string, name: string) {

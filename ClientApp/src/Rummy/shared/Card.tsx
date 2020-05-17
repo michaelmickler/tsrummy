@@ -1,17 +1,5 @@
-import mCard, { CardNames } from "../models/Card";
 import React from "react";
-
-export interface ICardProps {
-  card?: mCard;
-  children?: any;
-  cssCard?: any;
-  cssCardInner?: any;
-  onClick?: any;
-}
-export interface ICardMarkProps {
-  card: mCard;
-  type: 'left' | 'right';
-}
+import { CardNames } from "../models/Card";
 
 export const SuitIcons: any = {
   "Spades": <span>&#x2660;</span>,

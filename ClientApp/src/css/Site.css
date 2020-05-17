@@ -1,0 +1,30 @@
+header {
+  height: 100px;
+  line-height: 100px;
+}
+header > div {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.page {
+  max-width: 1280px;
+  width: 100%;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Provide sufficient contrast against white background */
+a { color: #0366d6; }
+code { color: #E01A76; }
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.relative { position: relative; }
