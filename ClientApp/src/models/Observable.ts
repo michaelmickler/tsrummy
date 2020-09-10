@@ -1,4 +1,11 @@
-export default class Observable<T> {
+interface IObservable<T> {
+  subscriptions: ((g: T & any) => any)[];
+  subscribe: (handler: (g: T & any) => any) => IObservable<T>;
+  update: () => void;
+  log: () => void;
+}
+
+export default class Observable<T> implements IObservable<T> {
   
   public subscriptions: ((g: T & any) => any)[] = [];
   

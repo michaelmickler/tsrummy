@@ -1,12 +1,32 @@
+html, body, div, p, td, header, footer, menu, nav, section {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;  
+}
+
+img { border: none; }
+table { border-collapse: collapse; }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 header {
   height: 100px;
   line-height: 100px;
+  clear: both;
 }
+
 header > div {
   display: inline-block;
   vertical-align: middle;
   margin-top: auto;
   margin-bottom: auto;
+  line-height: 1;
 }
 
 .page {
@@ -18,7 +38,11 @@ header > div {
 }
 
 /* Provide sufficient contrast against white background */
-a { color: #0366d6; }
+a, a:hover, a:visited {
+  color: #0366d6;
+  text-decoration: none;
+}
+
 code { color: #E01A76; }
 
 .btn-primary {

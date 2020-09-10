@@ -30,7 +30,7 @@ export class Deck {
 
   };
 
-  public DrawTop = (): Card => { 
+  public DrawTop = (): Card => {
     let cards = [ ...this.cards ];
     let card = cards.pop();
     this.cards = cards;

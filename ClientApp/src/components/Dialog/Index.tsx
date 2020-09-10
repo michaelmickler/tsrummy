@@ -2,14 +2,20 @@ import * as SignalR from "../../store/SignalR";
 
 import React from "react";
 import { connect } from "react-redux";
-import { ApplicationState } from "../../store";
+import { IApplicationState } from "../../store";
 
-export const Dialog: React.FC<IDialogProps & any> = ({ getConnection, Connect, updateId }) => {
+interface IDialogProps {
+  Connect?: any;
+  updateId?: string;
+  dialog?: any;
+}
+
+export const Dialog: React.FC<IDialogProps> = ({ Connect, updateId }) => {
 
   let input = React.useRef(null);
-
-  React.useEffect(() => {
-    SignalR.getConnection().on("receiveMessage", (username: string, message: string) => {
+  
+  React.useEffect(() => { 
+    SignalR.GetConnection().on("receiveMessage", (username: string, message: string) => {
       console.log("received");
       setDialog(dialog + `\n${username}: ${message}`);
     });
@@ -23,7 +29,7 @@ export const Dialog: React.FC<IDialogProps & any> = ({ getConnection, Connect, u
     e.preventDefault();
 
     if (input && input.current) {
-      SignalR.getConnection().invoke("sendMessage", "michaelmickler", input.current.value).catch(console.log);
+      SignalR.GetConnection().invoke("sendMessage", "michaelmickler", input.current.value).catch(console.log);
     }
 
     input.current.value = "";
@@ -40,7 +46,7 @@ export const Dialog: React.FC<IDialogProps & any> = ({ getConnection, Connect, u
 
 };
 
-export const mapState = (state: ApplicationState) => ({ isConnected: state.SignalR.connected, });
+export const mapState = (state: IApplicationState) => ({ isConnected: state.SignalR.connected, });
 export const mapDispatch = SignalR.actionCreators;
 
 export default connect(mapState, mapDispatch)(Dialog);

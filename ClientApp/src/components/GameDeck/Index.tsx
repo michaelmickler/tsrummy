@@ -1,7 +1,13 @@
 import React from "react";
-import mDeck from "../models/Deck";
+import mDeck from "../../models/Deck";
 
-const Card = React.lazy(() => import("./Card"));
+interface IGameDeckProps { 
+  onClick: (e: Event, pos: number) => void;
+  deck: mDeck;
+  updateId: string;
+}
+
+const Card = React.lazy(() => import("../Card/Index"));
 
 export const GameDeck: React.FC<IGameDeckProps> = ({ onClick, deck, updateId }) => {
 
@@ -21,12 +27,3 @@ export const GameDeck: React.FC<IGameDeckProps> = ({ onClick, deck, updateId }) 
 };
 
 export default GameDeck;
-
-
-
-
-interface IGameDeckProps { 
-  onClick: (e: Event, pos: number) => void;
-  deck: mDeck;
-  updateId: string;
-}

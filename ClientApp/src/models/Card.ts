@@ -5,21 +5,22 @@ export enum CardSuit {
   Clubs = "Clubs",
 }
 
-export const CardNames = {
-  "Two": "2",
-  "Three": "3",
-  "Four": "4",
-  "Five": "5",
-  "Six": "6",
-  "Seven": "7",
-  "Eight": "8",
-  "Nine": "9",
-  "Ten": "10",
-  "Jack": "J",
-  "Queen": "Q",
-  "King": "K",
-  "Ace": "A",
-};
+export const CardOrder = [
+  "Ace",
+  "Two",
+  "Three",
+  "Four",
+  "Five",
+  "Six",
+  "Seven",
+  "Eight",
+  "Nine",
+  "Ten",
+  "Jack",
+  "Queen",
+  "King",
+  "Ace"
+];
 
 export enum CardName {
   Two = "2",
@@ -37,7 +38,39 @@ export enum CardName {
   Ace = "Ace",
 }
 
-export class Card implements ICard {
+export const CardPoints: { [key: string]: number } = {
+  "Two": 5,
+  "Three": 5,
+  "Four": 5,
+  "Five": 5,
+  "Six": 5,
+  "Seven": 5,
+  "Eight": 5,
+  "Nine": 5,
+  "Ten": 10,
+  "Jack": 10,
+  "Queen": 10,
+  "King": 10,
+  "Ace": 15
+}
+
+export const CardNames = {
+  "Two": "2",
+  "Three": "3",
+  "Four": "4",
+  "Five": "5",
+  "Six": "6",
+  "Seven": "7",
+  "Eight": "8",
+  "Nine": "9",
+  "Ten": "10",
+  "Jack": "J",
+  "Queen": "Q",
+  "King": "K",
+  "Ace": "A",
+};
+
+export class Card {
 
   constructor(suit: string, name: string) {
     this.suit = suit;

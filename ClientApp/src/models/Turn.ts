@@ -1,11 +1,11 @@
 import Card from "./Card";
 import Move from "./Move";
 
-export interface ITurnResult { 
-  playerName: string;
-  draw: Card[]; 
-  moves: Move[], 
-  discard: Card,
+export class TurnResult { 
+  playerName: string = "";
+  draw: Card[] = []; 
+  moves: Move[] = []; 
+  discard: Card | null = null;
 }
 
 export enum TurnPhase {
@@ -24,10 +24,13 @@ export default class Turn {
 
   public draw: Card[] = [];
   public moves: Move[] = [];
-  public discard: Card | null = null;
+  public discard: Card = null;
   public playerName: string;
   public phase: TurnPhase = TurnPhase.Draw;
-  public mustPlay?: Card = null;
+  public mustPlay: Card | null = null;
+  public cantDiscard: Card | null = null;
+  public IsSubmitted: boolean = false;
+  public Message: string;
 
   public Draw = (cards: Card[]) => {
     this.draw = cards;
@@ -37,15 +40,15 @@ export default class Turn {
     } else {
       this.Message = "Play and/or discard ....";
     }
-  };
-  
-  public Play = (play: Move) => { this.moves.push(play); };  
+  };  
+  public Play = (play: Move) => { 
+    this.moves.push(play);
+  };  
   public checkPlayed = () => this.moves.reduce((result: Card | false, move) => {
     let c: Card | false = move.cards.filter((c: Card) => c === this.mustPlay)[0];
     if(c) { result = c; }
     return result;
-  }, false);
-  
+  }, false);  
   public Discard = (card: Card) => {
     if(this.mustPlay && !this.checkPlayed()) {
       return false;            
@@ -54,10 +57,6 @@ export default class Turn {
     this.phase = TurnPhase.Complete;
     this.Message = "Turn complete.";
   };
-
-  public IsSubmitted: boolean = false;
-  public Message: string;
-
   public IsValid = () => {
 
     if(this.draw.length === 0) {
@@ -87,8 +86,7 @@ export default class Turn {
     return true;
 
   };
-
-  public Submit = (): ITurnResult => {
+  public Submit = (): TurnResult => {
     if(this.IsValid()) {
 
       this.IsSubmitted = true;

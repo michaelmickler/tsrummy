@@ -1,7 +1,9 @@
 import React from "react";
-import { CardNames } from "../models/Card";
+import mCard, { CardNames } from "../../models/Card";
 
-export const SuitIcons: any = {
+interface ISuitIcons { [key: string]: any }
+
+export const SuitIcons: ISuitIcons = {
   "Spades": <span>&#x2660;</span>,
   "Hearts": <span>&#x2665;</span>,
   "Diamonds": <span>&#x2666;</span>,
@@ -10,8 +12,13 @@ export const SuitIcons: any = {
 
 export const Icons: any = {
   "LeftArrow": <span>◀</span>,
-  "RightArrao": <span>▶</span>
+  "RightArrow": <span>▶</span>
 };
+
+interface ICardMarkProps {
+  card: mCard;
+  type: 'left' | 'right';
+}
 
 export const CardMark: React.FC<ICardMarkProps> = ({ card, type }) => {
 
@@ -32,7 +39,15 @@ export const CardMark: React.FC<ICardMarkProps> = ({ card, type }) => {
 
 };
 
-export const Card: React.FC<ICardProps> = ({ children, card, cssCard, cssCardInner, onClick }) => {
+interface ICardProps {
+  card?: mCard;
+  children?: any;
+  cssCard?: any;
+  cssCardInner?: any;
+  onClick?: any;
+}
+
+export const Card: React.FC<ICardProps> = ({ children, card, cssCard, onClick }) => {
   
   return <div onClick={onClick || ((e) => null)} className="Card" style={{ ...(cssCard || {}) }}>
     <div className={`CardInner ${card && card.isFaceDown ? ' FaceDown' : ''}`}>

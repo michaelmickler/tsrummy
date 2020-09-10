@@ -79,5 +79,19 @@
   border: solid 1px #eee;
   height: 180px;
   margin-bottom: 10px;
+  position: relative;
 }
 .PlayerCards * { line-height: 1; }
+.PlayPopUp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  margin-top: -40px;
+  margin-left: -100px;
+  width: 200px;
+}
+.PlayPopUp > div {
+  display: inline-block;
+  margin: 0 4px;
+}

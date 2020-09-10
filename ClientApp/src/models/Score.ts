@@ -1,4 +1,9 @@
-export class Score {
+interface IScore {
+  points: number;
+  wins?: number;
+}
+
+export class Score implements IScore {
 
   constructor(points: number = 0) {
     this.points = points;
