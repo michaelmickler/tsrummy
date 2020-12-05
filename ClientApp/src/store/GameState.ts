@@ -1,6 +1,5 @@
 import { Action, Reducer } from 'redux';
 
-export interface IGameState {}
 export interface IAction { type: 'ACTION' }
 export type KnownAction = IAction; 
 

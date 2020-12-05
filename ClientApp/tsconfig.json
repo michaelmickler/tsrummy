@@ -20,7 +20,7 @@
     "skipLibCheck": false
   },
   "files": [
-    "src/typings/index.d.ts"
+    "src/typings/index.d.ts", "./src/models/CardSuit.ts", "./src/models/CardOrder.ts", "./src/models/CardName.ts", "./src/models/CardPoints.ts", "./src/models/CardNames.ts"
   ],
   "include": [
     "src", "typings/PlayerCards.d.ts", "typings/Dialog.d.ts", "typings/Card.d.ts"

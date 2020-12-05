@@ -1,15 +1,13 @@
-import Card from "./Card";
-
-export class Player {
+export class Player implements IPlayer {
 
   constructor(name: string) {
     this.name = name;
   }
 
-  hand: Card[] = [];
+  hand: ICard[] = [];
   name: string;
 
-  staging: Card[] = [];
+  staging: ICard[] = [];
 
 }
 

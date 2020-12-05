@@ -1,10 +1,8 @@
-import Card from "./Card";
-
-export class Move {
-  playId: string = Math.random().toString().split('.')[1];
-  cards: Card[];
-  points: number = 0;
-  type: 'straight' | 'group' | 'addon';
+export class Move implements IMove {
+  playId = Math.random().toString().split('.')[1];
+  cards: ICard[];
+  points = 0;
+  type: TMoveType;
 }
 
 export default Move;

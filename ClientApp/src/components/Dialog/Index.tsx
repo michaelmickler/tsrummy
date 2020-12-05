@@ -2,7 +2,6 @@ import * as SignalR from "../../store/SignalR";
 
 import React from "react";
 import { connect } from "react-redux";
-import { IApplicationState } from "../../store";
 
 interface IDialogProps {
   Connect?: any;
@@ -16,7 +15,6 @@ export const Dialog: React.FC<IDialogProps> = ({ Connect, updateId }) => {
   
   React.useEffect(() => { 
     SignalR.GetConnection().on("receiveMessage", (username: string, message: string) => {
-      console.log("received");
       setDialog(dialog + `\n${username}: ${message}`);
     });
     Connect();

@@ -1,28 +1,28 @@
-import Card, { CardOrder, CardPoints } from "./Card";
+import { CardPoints } from "./CardPoints";
+import { CardOrder } from "./CardOrder";
+
 import Player from "./Player";
 import Score from "./Score";
 import Deck from "./Deck";
 import Observable from "./Observable";
 import Move from "./Move";
-import Turn, { TurnResult, TurnPhase } from "./Turn";
-import { ifError } from "assert";
-
-export interface ITurnHistory { [key: string]: TurnResult[]; } 
+import Turn from "./Turn";
+import TurnPhase from "./TurnPhase";
 
 export class IsSuited { result: boolean = true; suit: string | null = null; }
 export class IsSet { result: boolean = true; name: string | null = null; }
 export class IsStraight { result: boolean = true; }
 
-export class Game extends Observable<Game> {
+export class Game extends Observable<Game> implements IGame {
 
   isReady: boolean = false;
-  players: Player[];
-  playerMap: { [key: string]: Player } = {};
-  deck: Deck;
-  pile: Card[] = [];
-  history: TurnResult[] = [];
+  players: IPlayer[];
+  playerMap: { [key: string]: IPlayer } = {};
+  deck: IDeck;
+  pile: ICard[] = [];
+  history: ITurnResult[] = [];
   score: Record<string, Score> = {};
-  turn: Turn;  
+  turn: ITurn;  
 
   constructor(players: Player[]) {
     super();
@@ -53,14 +53,14 @@ export class Game extends Observable<Game> {
     this.pile.push(c);
   };
 
-  public GetPlayer = (playerName: string): Player => this.players.filter(p => p.name === playerName)[0];
+  public GetPlayer = (playerName: string): IPlayer => this.players.filter(p => p.name === playerName)[0];
 
   public Draw = (pos: number) => {
 
     if(this.turn.phase !== TurnPhase.Draw) { return; }
     
     let player = this.playerMap[this.turn.playerName];
-    let cards: Card[];
+    let cards: ICard[];
     
     if(pos === 0) {
       cards = [this.deck.DrawTop()];
@@ -105,13 +105,13 @@ export class Game extends Observable<Game> {
     
   };
 
-  public UnStage = (pos: number, player: Player) => {
+  public UnStage = (pos: number, player: IPlayer) => {
     let [card] = player.staging.splice(pos, 1);
     player.hand.push(card);
     this.update();
   };
 
-  public Stage = (pos: number, player: Player) => {
+  public Stage = (pos: number, player: IPlayer) => {
 
     player.staging.push(player.hand.splice(pos, 1)[0]);
     this.update();    
@@ -123,13 +123,13 @@ export class Game extends Observable<Game> {
     let p = this.ActivePlayer();
     let m = new Move();
 
-    let isSet: IsSet = p.staging.reduce((r: IsSet, c: Card) => {
+    let isSet: IsSet = p.staging.reduce((r: IsSet, c: ICard) => {
       if(!r.name) { r.name = c.name; }
       else if(r.name !== c.name) { r.result = false; }      
       return r;
     }, new IsSet());
 
-    let isSuited: IsSuited = p.staging.reduce((r: IsSuited, c: Card) => {
+    let isSuited: IsSuited = p.staging.reduce((r: IsSuited, c: ICard) => {
       if(!r.suit) { r.suit = c.suit; }
       else if(r.suit !== c.suit) { r.result = false; }
       return r;
@@ -143,7 +143,7 @@ export class Game extends Observable<Game> {
     if(isSet.result) {
 
       console.log("You have a set of " + p.staging[0].name + "s");
-      m.points = p.staging.reduce((points: number, card: Card) => (points + CardPoints[card.name]), 0);
+      m.points = p.staging.reduce((points: number, card: ICard) => (points + CardPoints[card.name]), 0);
       m.cards = p.staging.splice(0, p.staging.length);
       m.type = "group";
       this.turn.Play(m);
@@ -152,8 +152,8 @@ export class Game extends Observable<Game> {
 
     } else {
       
-      let isStraight: IsStraight = p.staging.reduce((r: IsStraight, c: Card) => {
-        let _result = p.staging.reduce((_r: boolean, _c: Card) => {
+      let isStraight: IsStraight = p.staging.reduce((r: IsStraight, c: ICard) => {
+        let _result = p.staging.reduce((_r: boolean, _c: ICard) => {
           let p1 = CardOrder.indexOf(c.name);
           let p2 = CardOrder.indexOf(_c.name);
           let isAdjacent = Math.abs(p1 - p2) === 1;
@@ -174,9 +174,9 @@ export class Game extends Observable<Game> {
 
   };
 
-  public GetNextPlayerName = () => { 
+  public GetNextPlayerName = (): string => {
     
-    let { playerName } = this.players.reduce((result, player, index) => {      
+    let { playerName } = this.players.reduce((result, player, index) => {
       if(!result.done) {
         if(index === this.players.length - 1) {
           result.playerName = this.players[0].name;
@@ -194,7 +194,7 @@ export class Game extends Observable<Game> {
   };
 
   public GetScoreHistory: () => ITurnHistory = () => {
-    let scoreHistory: ITurnHistory = this.history.reduce((history: ITurnHistory, turn: TurnResult) => {
+    let scoreHistory: ITurnHistory = this.history.reduce((history: ITurnHistory, turn: ITurnResult) => {
       if(!history[turn.playerName]) { history[turn.playerName] = []; }
       if(turn.moves.length > 0) { history[turn.playerName].push(turn); }
       return history;
@@ -202,7 +202,7 @@ export class Game extends Observable<Game> {
     return scoreHistory;
   };
 
-  public ActivePlayer = () => this.playerMap[this.turn.playerName];
+  public ActivePlayer = (): IPlayer => this.playerMap[this.turn.playerName];
 
 }
 

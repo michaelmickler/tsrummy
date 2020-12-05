@@ -1,17 +1,16 @@
 import React from "react";
-import mCard from "../../models/Card";
 
 interface IPileProps {
-  onClick?: (e: Event, i: number, c: mCard) => void;
+  onClick?: (e: Event, i: number, c: ICard) => void;
   updateId?: string;
-  pile: mCard[];
+  pile: ICard[];
 }
 
 const Card: any = React.lazy(() => import ("../Card/Index"));
 
 export const GamePile: React.FC<IPileProps> = ({ pile, updateId, onClick }) => {
   
-  let args: { onClick?: (e: Event, i: number, c: mCard) => void; } = {};
+  let args: { onClick?: (e: Event, i: number, c: ICard) => void; } = {};
  
   return <div className="Pile">
     {

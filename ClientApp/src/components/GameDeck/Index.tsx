@@ -1,9 +1,8 @@
 import React from "react";
-import mDeck from "../../models/Deck";
 
 interface IGameDeckProps { 
   onClick: (e: Event, pos: number) => void;
-  deck: mDeck;
+  deck: IDeck;
   updateId: string;
 }
 

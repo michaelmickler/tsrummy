@@ -1,11 +1,9 @@
 import { Action, Reducer } from 'redux';
-import { IApplicationState } from '.';
 
 import SignalRClient from "../models/SignalR";
 
 const connection = SignalRClient.GetConnection();
 
-export interface ISignalRState { connected: boolean; }
 export interface IConnectSignalR { type: 'SIGNALR_CONNECT' }
 export interface IConnect { type: 'CONNECT' } 
 

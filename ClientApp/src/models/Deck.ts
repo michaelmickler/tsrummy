@@ -1,10 +1,12 @@
-import Card, { CardSuit, CardName } from "./Card";
+import Card from "./Card";
+import { CardName } from "./CardName";
+import { CardSuit } from "./CardSuit";
 
-export class Deck {
+export class Deck implements IDeck {
 
   constructor() {
 
-    let cards: Card[] = [];
+    let cards: ICard[] = [];
 
     for(let suit in CardSuit) {
       for(let name in CardName) {
@@ -30,14 +32,14 @@ export class Deck {
 
   };
 
-  public DrawTop = (): Card => {
+  public DrawTop = (): ICard => {
     let cards = [ ...this.cards ];
     let card = cards.pop();
     this.cards = cards;
     return card;
   };
   
-  public cards: Card[];
+  public cards: ICard[];
 
 }
 

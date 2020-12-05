@@ -1,0 +1,1 @@
+declare interface ISuitIcons { [key: string]: any }

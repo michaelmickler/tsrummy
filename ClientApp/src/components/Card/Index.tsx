@@ -1,7 +1,5 @@
 import React from "react";
-import mCard, { CardNames } from "../../models/Card";
-
-interface ISuitIcons { [key: string]: any }
+import { CardNames } from "../../models/CardNames";
 
 export const SuitIcons: ISuitIcons = {
   "Spades": <span>&#x2660;</span>,
@@ -16,7 +14,7 @@ export const Icons: any = {
 };
 
 interface ICardMarkProps {
-  card: mCard;
+  card: ICard;
   type: 'left' | 'right';
 }
 
@@ -40,7 +38,7 @@ export const CardMark: React.FC<ICardMarkProps> = ({ card, type }) => {
 };
 
 interface ICardProps {
-  card?: mCard;
+  card?: ICard;
   children?: any;
   cssCard?: any;
   cssCardInner?: any;

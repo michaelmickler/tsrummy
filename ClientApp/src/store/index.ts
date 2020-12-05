@@ -1,16 +1,7 @@
-import { reducer as gameReducer, IGameState } from './GameState';
-import { reducer as signalrReducer, ISignalRState } from './SignalR';
-
-export interface IApplicationState {
-    GameState: IGameState | undefined;
-    SignalR: ISignalRState | undefined;
-}
+import { reducer as gameReducer } from './GameState';
+import { reducer as signalrReducer } from './SignalR';
 
 export const reducers = {
     GameState: gameReducer,
     SignalR: signalrReducer,
 };
-
-export interface IAppThunkAction<TAction> {
-    (dispatch: (action: TAction) => void, getState: () => IApplicationState): void;
-}

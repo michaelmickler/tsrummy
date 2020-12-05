@@ -1,13 +1,11 @@
 import React from "react";
-import Game from "../../models/Game";
-import Card from "../../models/Card";
-import { TurnPhase } from "../../models/Turn";
+import TurnPhase from "../../models/TurnPhase";
 
 const GamePile = React.lazy(() => import("../GamePile/Index"));
 const PlayerScore = React.lazy(() => import("../PlayerScore/Index"));
 
 interface IPlayerCardsProps {
-  game: Game;
+  game: IGame;
   updateId: string;
 }
 
@@ -24,7 +22,7 @@ export const PlayerCards: React.FC<IPlayerCardsProps> = ({ game, updateId }) => 
 
   let p = game.ActivePlayer();
   
-  const onPileClick = (e: Event, i: number, c: Card) => {   
+  const onPileClick = (e: Event, i: number, c: ICard) => {   
     if (game.turn.phase === TurnPhase.Play) {
       setCard(c);
       setIndex(i);
@@ -55,8 +53,9 @@ export const PlayerCards: React.FC<IPlayerCardsProps> = ({ game, updateId }) => 
     {
       index > -1 && <div className="PlayPopUp">
         {
-          cardStaged() && <span><span role="button" onClick={UnStageCard}>Do Not Play</span><span> | </span></span> ||
-          <span><span role="button" onClick={StageCard}>Play</span><span> | </span></span>
+          cardStaged()
+            ? <span><span role="button" onClick={UnStageCard}>Do Not Play</span><span> | </span></span>
+            : <span><span role="button" onClick={StageCard}>Play</span><span> | </span></span>
         }
         {
           !cardsStaged() && canDiscard() && <span><span role="button" onClick={DiscardToPile}>Discard</span><span> | </span></span>
